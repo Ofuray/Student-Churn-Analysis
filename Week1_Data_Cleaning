@@ -1,1 +1,108 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Week 1 Data Cleaning Report\n",
+    "\n",
+    "## Introduction\n",
+    "**Purpose:** The purpose of this report is to document the tasks completed during Week 1 of the internship. The focus was on data cleaning and feature engineering to ensure that the dataset is accurate, consistent, and enriched with new meaningful features for further analysis.\n",
+    "\n",
+    "**Data Description:** The dataset used was obtained from Excelerate Dashboard. It contains learner sign-up information, opportunity details, demographic information, and application records.\n",
+    "\n",
+    "**Key original columns include:**\n",
+    "- Learner Sign-Up Date Time\n",
+    "- Opportunity Id & Name\n",
+    "- Opportunity Start/End Date\n",
+    "- Personal Information (First name, Date of Birth, Gender, Country, Institution, Major)\n",
+    "- Application Details (Status description, Status code, Application date)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Data Cleaning Process\n",
+    "\n",
+    "**Cleaning Steps Taken:**\n",
+    "1. Handling Missing Values – Checked for missing values and imputed or removed records as needed.\n",
+    "2. Removing Duplicates – Removed duplicate rows based on Opportunity Id and Learner Sign-Up Date Time.\n",
+    "3. Standardizing Formats – Converted date columns into consistent datetime format.\n",
+    "4. Data Type Corrections – Converted numerical fields and ensured derived columns were numeric.\n",
+    "\n",
+    "**Issues Encountered & Resolution:** Some date columns had inconsistent formats, which were standardized. A few incomplete records were dropped to maintain dataset integrity."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## New Features Created (Engineered)\n",
+    "| Feature Name | Description | Rationale |\n",
+    "|--------------|-------------|-----------|\n",
+    "| Age | Age of learner at the time of application (from Date of Birth) | Allows age-based segmentation and demographic analysis |\n",
+    "| Application_Lag_Days | Days between learner signup and opportunity application | Measures engagement, speed and promptness of learners |\n",
+    "| Opportunity_Duration_Days | Duration of the opportunity in days (End Date – Start Date) | Useful for analyzing program lengths |\n",
+    "| Region | Geographic region mapped from learner’s country | Enables regional analysis and cross-continent comparisons |\n",
+    "| Signup_Season | Season of the year learner signed up | Identifies seasonal signup/application patterns |\n",
+    "| Tenure_Days | Days between learner signup and first recorded application | Measures learner engagement lifecycle |\n",
+    "| Age_Group | Age binned into ranges (18-22, 23-27, 28+) | Supports analysis by educational/career stage |\n",
+    "| Apply_Year | Year extracted from Apply Date | Enables year-over-year trend analysis |\n",
+    "| Apply_Month | Month extracted from Apply Date | Identifies monthly and seasonal variations |\n",
+    "| Signup_Timing | Labels learners as Early or Late joiners based on signup relative to start date | Provides insights into learner preparation and behavior |"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Example Transformations\n",
+    "```python\n",
+    "# Application Lag Days\n",
+    "df['Application_Lag_Days'] = (df['Apply Date'] - df['Learner SignUp DateTime']).dt.days\n",
+    "\n",
+    "# Opportunity Duration Days\n",
+    "df['Opportunity_Duration_Days'] = (df['Opportunity End Date'] - df['Opportunity Start Date']).dt.days\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Data Validation\n",
+    "**Validation Checks Performed:**\n",
+    "1. Range Checks – Verified Age and Opportunity_Duration_Days values.\n",
+    "2. Consistency Checks – Ensured Apply Date follows Sign-Up Date Time.\n",
+    "3. Duplicate Checks – Confirmed no duplicates remain.\n",
+    "\n",
+    "**Validation Outcome:** All new features are consistent, no major anomalies remain, and the dataset is ready for analysis in Week 2."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Conclusion\n",
+    "During Week 1, the dataset was successfully cleaned and enhanced with ten new engineered features: Age, Application Lag, Opportunity Duration, Region, Signup Season, Days of Tenure, Age Group, Year of Application, Month of Application, and Signup Timing. This ensured consistency, removed redundancies, and prepared the dataset for analysis.\n",
+    "\n",
+    "**Next Steps (Week 2):** Perform Exploratory Data Analysis (EDA), begin segmentation and visualization, and prepare a dataset for predictive modeling."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "name": "python",
+   "version": "3.11"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
 
